@@ -5,51 +5,23 @@ import React, {
   useContext,
   useMemo
 } from 'react'
-
-const toPx = (val, size, x, param) => {
-  const max = x ? size.width : size.height
-  const basePx = max*val
-  const finalPx = !!param ? basePx+param : basePx
-  return finalPx
-}
+import TetradSVG from './Svgr'
 
 
-export default function Tetrad() {
+export default function Tetrad({ portrait }) {
   return (
     <div
       sx={{
-        height:'100vh',
-        width:'inherit',
+        height:portrait ? '70vh' : '100vh',
+        width:portrait ? '100vw' : '70vw',
         display:'flex',
         justifyContent:'center',
-        alignItems:'space-around'
+        alignItems:'center',
+        p:[3,4,5],
+        bg:'light'
       }}
       >
-      <svg>
-        <g>
-          <line x1="0" y1="80" x2="100" y2="20" stroke="black"/>
-          <line x1="0" y1="80" x2="100" y2="20" stroke="black"/>
-          <line x1="0" y1="80" x2="100" y2="20" stroke="black"/>
-          <line x1="0" y1="80" x2="100" y2="20" stroke="black"/>
-          <line x1="0" y1="80" x2="100" y2="20" stroke="black"/>
-          <line x1="0" y1="80" x2="100" y2="20" stroke="black"/>
-          <g>
-            <circle cx={100} cy={100} r={40} fill={'blue'}/>
-            <text x={100} y={100} fill='white'>test</text>
-          </g>
-          <g>
-            <circle cx={100} cy={100} r={40} fill={'blue'}/>
-          </g>
-          <g>
-            <circle cx={100} cy={100} r={40} fill={'blue'}/>
-            <text x={5} y={5} fill='black'>test</text>
-          </g>
-          <g>
-            <circle cx={100} cy={100} r={40} fill={'blue'} onClick={()=>{alert('click')}}/>
-            <text x={100} y={100} textAnchor='middle' fill='black'>test</text>
-          </g>
-        </g>
-      </svg>
+      <TetradSVG viewBox={`0 0 553.89 553.89`}/>
     </div>
   )
 }

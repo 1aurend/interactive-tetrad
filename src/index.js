@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom'
 // import Store from './data/Store'
 import reportWebVitals from './reportWebVitals'
 import Router from './Router'
+import { ThemeProvider } from 'theme-ui'
+import theme from './theme'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router />
+    <ThemeProvider theme={theme}>
+      <Router />
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )
