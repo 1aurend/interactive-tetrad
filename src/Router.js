@@ -5,6 +5,9 @@ import {
   Route
 } from 'react-router-dom'
 import TetradLayout from './TetradLayout'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+
 
 
 export default function AppRouter({ fbInstance=true }) {
@@ -12,7 +15,9 @@ export default function AppRouter({ fbInstance=true }) {
     <Router>
       <Switch>
         <Route exact path='/'>
-          <TetradLayout fbInstance={fbInstance}/>
+          <DndProvider backend={HTML5Backend}>
+            <TetradLayout fbInstance={fbInstance}/>
+          </DndProvider>
         </Route>
       </Switch>
     </Router>

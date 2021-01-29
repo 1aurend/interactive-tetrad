@@ -1,9 +1,10 @@
 const theme = {
   fonts: {
-    body: 'Montserrat, sans-serif',
+    body: 'Roboto, sans-serif',
     heading: 'Della Respira, serif',
     fatserif: 'Suez One, serif',
     monospace: 'Menlo, monospace',
+    tetrad: 'Kohinoor Devanagari, sans-serif'
   },
   fontSizes: {
       'microscopic': '1.1vmin',
@@ -11,7 +12,7 @@ const theme = {
       'teensy': '1.5vmin',
       'tiny': '1.75vmin',
       'small': '2vmin',
-      'medium': '4vmin',
+      'medium': '3vmin',
       'large': '6vmin',
       'huge': '8vmin',
       'colossal': '12vmin',
@@ -39,6 +40,8 @@ const theme = {
     DarkPurple: '#191B4D',
     DarkPurple1: '#131438',
     Grey: '#3D4849',
+    DarkGrey1: '#222829',
+    DarkGrey2: '#191e1e'
   },
   space: [0, 4, 8, 16, 32, 48],
   breakpoints: ['40em', '64em', '80em'],
