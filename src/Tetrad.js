@@ -12,8 +12,8 @@ export default function Tetrad({ portrait }) {
   return (
     <div
       sx={{
-        height:portrait ? '70vh' : '100vh',
-        width:portrait ? '100vw' : '70vw',
+        height:portrait ? '60vh' : '100vh',
+        width:portrait ? '100vw' : '60vw',
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
@@ -21,7 +21,7 @@ export default function Tetrad({ portrait }) {
         bg:'light'
       }}
       >
-      <TetradSVG viewBox={`0 0 553.89 553.89`}/>
+      <TetradSVG viewBox={`-10 0 580 580`}/>
     </div>
   )
 }

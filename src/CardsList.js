@@ -4,7 +4,7 @@ import { useDrag } from 'react-dnd'
 import { DraggableTypes } from './dndConsts'
 
 
-const Card = ({ text }) => {
+const Card = ({ text, num }) => {
   const [{ isDragging }, drag] = useDrag({
     item: { type: DraggableTypes.CARD },
     collect: (monitor) => ({
@@ -16,13 +16,15 @@ const Card = ({ text }) => {
     <div
       ref={drag}
       sx={{
-        width:'48%',
+        width:'31%',
         height:'7.4vw',
         background:'linear-gradient(to right bottom, #62c4d6,#a3509f,#db742b,#e0c73a)',
         fontFamily:'body',
         fontSize:'miniscule',
         color:'DarkGrey1',
         mt:'2vmin',
+        mr:(num % 3) === 0? '' : '1vw',
+        p:'10px',
         textAlign:'center',
         display:'flex',
         flexDirection:'column',
@@ -41,11 +43,11 @@ export default function CardsList({ cards }){
     <div
       sx={{
         display:'flex',
-        justifyContent:'space-between',
+        justifyContent:'flex-start',
         flexWrap:'wrap'
       }}
       >
-      {cards.map(card => <Card text={card}/>)}
+      {cards.map((card, i) => <Card key={i} num={i+1} text={card}/>)}
     </div>
   )
 }

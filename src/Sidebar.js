@@ -18,8 +18,8 @@ export default function Sidebar({ portrait }) {
   return (
     <div
       sx={{
-        height:portrait ? '30vh' : '100vh',
-        width:portrait ? '100vw' : '30vw',
+        height:portrait ? '40vh' : '100vh',
+        width:portrait ? '100vw' : '40vw',
         bg:'Grey',
         display:'flex',
         flexDirection:'column',
@@ -42,7 +42,7 @@ export default function Sidebar({ portrait }) {
         value={input}
         onChange={e=>setInput(e.target.value)}
         sx={{
-          width:'100%',
+          width:'80%',
           fontSize:'teensy',
           fontFamily:'tetrad'
         }}/>

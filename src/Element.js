@@ -1,4 +1,6 @@
 import React from 'react'
+import { useDrop } from 'react-dnd'
+import { DraggableTypes } from './dndConsts'
 
 
 export default function Element(props) {
@@ -8,10 +10,23 @@ export default function Element(props) {
     cy,
     type
   } = props
+  const [{ isOver }, drop] = useDrop({
+    accept: DraggableTypes.CARD,
+    drop: () => alert(`dropped on ${type}`),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver()
+    })
+  })
 
   return (
-    <g>
-      <circle cx={cx} cy={cy} r={70.3} fill={fill} />
+    <g ref={drop}>
+      <circle
+        cx={cx}
+        cy={cy}
+        r={isOver? 80 : 70.3}
+        fill={fill}
+        opacity={isOver? .8 : 1}
+        />
       {type === 'aesth' &&
         <text
           transform="translate(241.37 74.22)"
