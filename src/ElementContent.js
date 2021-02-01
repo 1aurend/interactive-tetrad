@@ -9,7 +9,7 @@ import theme from './theme'
 import useRAFSize from './hooks/useRAFWindowSize'
 
 
-export default function ElementContent({ type, portrait }) {
+export default function ElementContent({ type, portrait, setVisible }) {
   // const data = useContext(Data)
   // const items = data[type]
   const size = useRAFSize()
@@ -27,6 +27,7 @@ export default function ElementContent({ type, portrait }) {
 
   return (
     <div
+      onClick={() => setVisible({visible:false,type:''})}
       sx={{
         bg:theme.colors[type],
         height:portrait ? '30vh' : '30vw',
@@ -34,8 +35,9 @@ export default function ElementContent({ type, portrait }) {
         position:'absolute',
         top:portrait ? '15vh' : top,
         left:portrait ? left : '15vw',
-        zIndex:100,
-        opacity:.9
+        zIndex:1,
+        opacity:.9,
+        filter:`drop-shadow(0 0 1rem ${theme.colors.Grey})`
       }}>
       {type}
     </div>

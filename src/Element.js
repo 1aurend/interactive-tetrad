@@ -1,9 +1,11 @@
 import React, {
-  useState
+  useState,
+  useContext
 } from 'react'
 import { useDrop } from 'react-dnd'
 import { DraggableTypes } from './dndConsts'
 import ElementContent from './ElementContentSVG'
+import { Cards, UpdateCards } from '../src/data/Store'
 
 
 export default function Element(props) {
@@ -14,9 +16,16 @@ export default function Element(props) {
     type,
     showContent
   } = props
+  const updateCards = useContext(UpdateCards)
+  const cards = useContext(Cards)
   const [{ isOver }, drop] = useDrop({
     accept: DraggableTypes.CARD,
-    drop: () => alert(`dropped on ${type}`),
+    drop: (monitor) => {
+      const update = [...cards]
+      update.splice(monitor.i, 1)
+      updateCards(update)
+      //send card to firebase
+    },
     collect: (monitor) => ({
       isOver: !!monitor.isOver()
     })

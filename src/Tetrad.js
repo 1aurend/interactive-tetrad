@@ -25,7 +25,12 @@ export default function Tetrad({ portrait }) {
       }}
       >
       <TetradSVG viewBox={`-10 0 580 580`} showContent={setContent}/>
-      {content.visible && <Content type={content.type} portrait={portrait}/>}
+      {content.visible &&
+        <Content
+          type={content.type}
+          portrait={portrait}
+          setVisible={setContent}/>
+      }
     </div>
   )
 }

@@ -6,7 +6,7 @@ import { DraggableTypes } from './dndConsts'
 
 const Card = ({ text, num, portrait }) => {
   const [{ isDragging }, drag] = useDrag({
-    item: { type: DraggableTypes.CARD },
+    item: { type: DraggableTypes.CARD, i: num-1 },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging()
     })

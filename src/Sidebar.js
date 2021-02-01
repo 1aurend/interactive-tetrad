@@ -1,14 +1,17 @@
 /** @jsxImportSource theme-ui */
 import React, {
-  useState
+  useState,
+  useContext
 } from 'react'
 import debounce from 'lodash.debounce'
 import CardsList from './CardsList'
+import { Cards, UpdateCards } from '../src/data/Store'
 
 
 export default function Sidebar({ portrait }) {
   const [input, setInput] = useState('')
-  const [cards, updateCards] = useState([])
+  const cards = useContext(Cards)
+  const updateCards = useContext(UpdateCards)
 
   const createCard = e => {
     updateCards([...cards, input])
