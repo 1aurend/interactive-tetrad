@@ -4,7 +4,7 @@ import { useDrag } from 'react-dnd'
 import { DraggableTypes } from './dndConsts'
 
 
-const Card = ({ text, num }) => {
+const Card = ({ text, num, portrait }) => {
   const [{ isDragging }, drag] = useDrag({
     item: { type: DraggableTypes.CARD },
     collect: (monitor) => ({
@@ -16,14 +16,14 @@ const Card = ({ text, num }) => {
     <div
       ref={drag}
       sx={{
-        width:'31%',
-        height:'7.4vw',
+        width:portrait ? '22%' : '31%',
+        height:portrait ? '8vw' : '7.4vw',
         background:'linear-gradient(to right bottom, #62c4d6,#a3509f,#db742b,#e0c73a)',
         fontFamily:'body',
         fontSize:'miniscule',
         color:'DarkGrey1',
         mt:'2vmin',
-        mr:(num % 3) === 0? '' : '1vw',
+        mr:portrait ? (num % 4) === 0 ? 0 : '1vw' : (num % 3) === 0? '' : '1vw',
         p:'10px',
         textAlign:'center',
         display:'flex',
@@ -38,7 +38,7 @@ const Card = ({ text, num }) => {
   )
 }
 
-export default function CardsList({ cards }){
+export default function CardsList({ cards, portrait }){
   return (
     <div
       sx={{
@@ -47,7 +47,7 @@ export default function CardsList({ cards }){
         flexWrap:'wrap'
       }}
       >
-      {cards.map((card, i) => <Card key={i} num={i+1} text={card}/>)}
+      {cards.map((card, i) => <Card key={i} num={i+1} text={card} portrait={portrait}/>)}
     </div>
   )
 }
