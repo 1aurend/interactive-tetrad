@@ -1,14 +1,17 @@
 /** @jsxImportSource theme-ui */
 import React, {
-  useRef,
+  useState,
   useEffect,
   useContext,
-  useMemo
+  useMemo,
+  useReducer
 } from 'react'
 import TetradSVG from './Svgr'
+import Content from './ElementContent'
 
 
 export default function Tetrad({ portrait }) {
+  const [content, setContent] = useState({visible:false,type:''})
   return (
     <div
       sx={{
@@ -21,7 +24,8 @@ export default function Tetrad({ portrait }) {
         bg:'light'
       }}
       >
-      <TetradSVG viewBox={`-10 0 580 580`}/>
+      <TetradSVG viewBox={`-10 0 580 580`} showContent={setContent}/>
+      {content.visible && <Content type={content.type} portrait={portrait}/>}
     </div>
   )
 }

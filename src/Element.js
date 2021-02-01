@@ -1,6 +1,9 @@
-import React from 'react'
+import React, {
+  useState
+} from 'react'
 import { useDrop } from 'react-dnd'
 import { DraggableTypes } from './dndConsts'
+import ElementContent from './ElementContentSVG'
 
 
 export default function Element(props) {
@@ -8,7 +11,8 @@ export default function Element(props) {
     fill,
     cx,
     cy,
-    type
+    type,
+    showContent
   } = props
   const [{ isOver }, drop] = useDrop({
     accept: DraggableTypes.CARD,
@@ -17,8 +21,17 @@ export default function Element(props) {
       isOver: !!monitor.isOver()
     })
   })
+  const handleClick = () => {
+    showContent(prevContent => {
+      if (prevContent.type === type) {
+        return {visible:!prevContent.visible,type:type}
+      }
+      return {visible:true,type:type}
+    })
+  }
 
   return (
+    <>
     <g ref={drop}>
       <circle
         cx={cx}
@@ -26,6 +39,7 @@ export default function Element(props) {
         r={isOver? 80 : 70.3}
         fill={fill}
         opacity={isOver? .8 : 1}
+        onClick={handleClick}
         />
       {type === 'aesth' &&
         <text
@@ -166,5 +180,6 @@ export default function Element(props) {
         </text>
       }
     </g>
+    </>
   )
 }

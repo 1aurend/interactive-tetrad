@@ -2,7 +2,7 @@ import React from 'react'
 import Element from './Element'
 
 
-export default function TetradSVG({ viewBox }) {
+export default function TetradSVG({ viewBox, showContent }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -30,6 +30,7 @@ export default function TetradSVG({ viewBox }) {
           r={70.3}
           fill="#a3509f"
           type='aesth'
+          showContent={showContent}
           />
         <Element
           cx={276.94}
@@ -37,6 +38,7 @@ export default function TetradSVG({ viewBox }) {
           r={70.3}
           fill="#62c4d6"
           type='tech'
+          showContent={showContent}
           />
         <Element
           cx={483.58}
@@ -44,6 +46,7 @@ export default function TetradSVG({ viewBox }) {
           r={70.3}
           fill="#db742b"
           type='story'
+          showContent={showContent}
           />
         <Element
           cx={70.3}
@@ -51,6 +54,7 @@ export default function TetradSVG({ viewBox }) {
           r={70.3}
           fill="#e0c73a"
           type='mech'
+          showContent={showContent}
           />
       </g>
     </svg>

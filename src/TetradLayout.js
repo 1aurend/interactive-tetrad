@@ -3,6 +3,7 @@ import React from 'react'
 import Sidebar from './Sidebar'
 import Tetrad from './Tetrad'
 import useMediaQueries from './hooks/useMediaQueries'
+import Content from './ElementContent'
 
 
 export default function TetradLayout({ fbInstance }) {
