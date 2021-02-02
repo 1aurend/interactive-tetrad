@@ -1,7 +1,8 @@
 /** @jsxImportSource theme-ui */
 import React, {
   useState,
-  useContext
+  useContext,
+  useEffect
 } from 'react'
 import CardsList from './CardsList'
 import {
@@ -10,15 +11,19 @@ import {
   TetradSave,
   Data
 } from '../src/data/Store'
+import firebase from 'firebase'
+import { Select, Input } from 'theme-ui'
 
 
-export default function Sidebar({ portrait }) {
+export default function Sidebar({ portrait, fbInstance }) {
   const [cardInput, setCardInput] = useState('')
   const [nameInput, setNameInput] = useState('')
+  const [nameSelect, setNameSelect] = useState(null)
   const cards = useContext(Cards)
   const updateCards = useContext(UpdateCards)
   const save = useContext(TetradSave)
   const data = useContext(Data)
+  const [tetradList, setList] = useState([])
 
   const createCard = e => {
     updateCards([...cards, cardInput])
@@ -26,9 +31,27 @@ export default function Sidebar({ portrait }) {
   }
 
   const addToDB = () => {
+    if (nameSelect) {
+      const find = tetradList.filter(item => item.uid === nameSelect)[0]
+      save({type:'OPEN',uid:nameSelect,name:find.name})
+      return
+    }
     save({type:'CREATE',name:nameInput})
     setNameInput('')
   }
+
+  useEffect(() => {
+    if (!data.uid && fbInstance) {
+      firebase.database().ref(`/tetrads`).once('value', snapshot => {
+        const list = snapshot.val() ? snapshot.val() : null
+        if (list) {
+          console.log(list)
+          const options = Object.keys(list).map(item => ({uid:item,name:list[item].name}))
+          setList(options)
+        }
+      })
+    }
+  }, [data.uid, fbInstance])
 
   return (
     <div
@@ -73,17 +96,18 @@ export default function Sidebar({ portrait }) {
             >
             Choose a game or class to explore
           </h2>
-          <input
-            type='select'
-            maxLength='50'
-            placeholder='select'
-            value={nameInput}
-            onChange={e=>setNameInput(e.target.value)}
+          <Select
+            defaultValue={null}
+            onChange={e=>setNameSelect(e.target.value)}
             sx={{
               width:'90%',
               fontSize:'teensy',
-              fontFamily:'tetrad'
-            }}/>
+              fontFamily:'tetrad',
+              bg:'light'
+            }}>
+            <option value={null}>select...</option>
+            {tetradList.map((item, i) => <option value={item.uid} key={i}>{item.name}</option>)}
+          </Select>
           <h2
             sx={{
               fontSize:'tiny',
@@ -96,7 +120,7 @@ export default function Sidebar({ portrait }) {
             >
             ...or add a new one
           </h2>
-          <input
+          <Input
             type='text'
             maxLength='50'
             placeholder=''
@@ -105,7 +129,8 @@ export default function Sidebar({ portrait }) {
             sx={{
               width:'90%',
               fontSize:'teensy',
-              fontFamily:'tetrad'
+              fontFamily:'tetrad',
+              bg:'light'
             }}/>
           <button
             onClick={addToDB}
@@ -126,7 +151,31 @@ export default function Sidebar({ portrait }) {
         }
         {data.uid &&
           <>
-          <input
+          <h2
+            sx={{
+              fontSize:'medium',
+              fontFamily:'tetrad',
+              fontWeight:'bold',
+              color:'aesth',
+              mt:portrait ? 0 : '.83em',
+              lineHeight:'3vmin',
+            }}
+            >
+            {data.name}
+          </h2>
+          <h2
+            sx={{
+              fontSize:'teensy',
+              fontFamily:'body',
+              color:'DarkGrey1',
+              fontWeight:'normal',
+              mt:0,
+              mb:'1em'
+            }}
+            >
+            Create cards and drag and drop to fill out the tetrad
+          </h2>
+          <Input
             type='text'
             maxLength='50'
             placeholder='Create a new card...'
@@ -135,7 +184,8 @@ export default function Sidebar({ portrait }) {
             sx={{
               width:'80%',
               fontSize:'teensy',
-              fontFamily:'tetrad'
+              fontFamily:'tetrad',
+              bg:'light'
             }}/>
           <button
             onClick={createCard}
@@ -147,7 +197,7 @@ export default function Sidebar({ portrait }) {
               fontSize:'teensy',
               fontFamily:'body',
               width:portrait ? '50%' : '20%',
-              mt:[1,2,3]
+              mt:[2,3,4]
             }}
             >
             create

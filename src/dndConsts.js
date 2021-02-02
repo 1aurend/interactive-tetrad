@@ -1,3 +1,4 @@
 export const DraggableTypes = {
-  CARD: 'card'
+  CARD: 'card',
+  TAG: 'tag'
 }

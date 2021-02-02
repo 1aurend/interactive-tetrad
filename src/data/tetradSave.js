@@ -1,6 +1,5 @@
 import firebase from 'firebase'
 
-
 export default function tetradSave(data, action) {
   switch (action.type) {
     case 'RESET':
@@ -13,6 +12,7 @@ export default function tetradSave(data, action) {
         aesth:[],
       }
     case 'CREATE':
+      console.log('create')
       const uid = firebase.database().ref(`/tetrads`)
         .push()
         .getKey()
@@ -24,15 +24,8 @@ export default function tetradSave(data, action) {
           }
         })
       return {...data, uid:uid, name:action.name}
-    // case 'REMOVE':
-    //   firebase.database().ref(`tetrads/${data.uid}/${action.el}/${action.i}`)
-    //     .update(null, err => {
-    //       if (err) {
-    //         alert('We had an issue connecting to the database. Sorry about that! Please try again.')
-    //         return
-    //       }
-    //     })
-    //   return data
+    case 'OPEN':
+      return {...data, uid:action.uid, name:action.name}
     case 'STORY':
       console.log('story')
       return {...data, story:Object.values(action.update)}

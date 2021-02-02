@@ -11,7 +11,7 @@ import Store from '../src/data/Store'
 
 
 
-export default function AppRouter({ fbInstance=true }) {
+export default function AppRouter({ fbInstance }) {
   return (
     <Router>
       <Switch>

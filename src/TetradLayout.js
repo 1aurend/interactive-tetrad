@@ -43,6 +43,8 @@ export default function TetradLayout({ fbInstance }) {
     }
   }, [data.uid, save])
 
+  console.log(data)
+
 
   return (
     <main
@@ -56,7 +58,7 @@ export default function TetradLayout({ fbInstance }) {
       }}
       >
       <Tetrad portrait={mediaVals.portrait}/>
-      <Sidebar portrait={mediaVals.portrait}/>
+      <Sidebar portrait={mediaVals.portrait} fbInstance={fbInstance}/>
     </main>
   )
 }
