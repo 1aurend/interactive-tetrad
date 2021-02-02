@@ -36,17 +36,6 @@ export default function Store() {
     return () => firebase.app().delete()
   }, [])
 
-  useEffect(() => {
-    firebase.database().ref(`/${data.uid}/story`).on('value', snapshot => {
-    const update = snapshot.val() ? snapshot.val() : []
-    console.log(update)
-    saveData({type:'STORY',update:update})
-    })
-    return () => firebase.database().ref(`/${data.uid}/story`).off()
-  }, [data.uid])
-
-  console.log(data)
-
   return (
     <Data.Provider value={data}>
       <TetradSave.Provider value={saveData}>
