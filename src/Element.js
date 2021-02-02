@@ -1,11 +1,9 @@
 import React, {
-  useState,
   useContext
 } from 'react'
 import { useDrop } from 'react-dnd'
 import { DraggableTypes } from './dndConsts'
-import ElementContent from './ElementContentSVG'
-import { Cards, UpdateCards } from '../src/data/Store'
+import { Cards, UpdateCards, TetradSave } from '../src/data/Store'
 
 
 export default function Element(props) {
@@ -18,13 +16,14 @@ export default function Element(props) {
   } = props
   const updateCards = useContext(UpdateCards)
   const cards = useContext(Cards)
+  const save = useContext(TetradSave)
   const [{ isOver }, drop] = useDrop({
     accept: DraggableTypes.CARD,
     drop: (monitor) => {
       const update = [...cards]
       update.splice(monitor.i, 1)
       updateCards(update)
-      //send card to firebase
+      save({type:'ADD',el:type,card:cards[monitor.i]})
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver()

@@ -4,8 +4,8 @@ import React, {
   useState
 } from 'react'
 import firebase from 'firebase'
-// import { firebaseConfig } from './config'
-// import tetradSave from './tetradSave'
+import { firebaseConfig } from './firebaseConfig'
+import tetradSave from './tetradSave'
 import Router from '../Router'
 
 export const Data = React.createContext()
@@ -25,16 +25,27 @@ export default function Store() {
     story:[],
     aesth:[],
   }
-  const [data, saveData] = useReducer(setInstance, initialData)
+  const [data, saveData] = useReducer(tetradSave, initialData)
 
-  // useEffect(() => {
-  //   firebase.initializeApp(firebaseConfig)
-  //   firebase.analytics()
-  //   firebase.auth().onAuthStateChanged(() => {
-  //     setInstance(true)
-  //   })
-  //   return () => firebase.app().delete()
-  // }, [])
+  useEffect(() => {
+    firebase.initializeApp(firebaseConfig)
+    firebase.analytics()
+    firebase.auth().onAuthStateChanged(() => {
+      setInstance(true)
+    })
+    return () => firebase.app().delete()
+  }, [])
+
+  useEffect(() => {
+    firebase.database().ref(`/${data.uid}/story`).on('value', snapshot => {
+    const update = snapshot.val() ? snapshot.val() : []
+    console.log(update)
+    saveData({type:'STORY',update:update})
+    })
+    return () => firebase.database().ref(`/${data.uid}/story`).off()
+  }, [data.uid])
+
+  console.log(data)
 
   return (
     <Data.Provider value={data}>

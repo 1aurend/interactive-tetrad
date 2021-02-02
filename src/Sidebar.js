@@ -5,17 +5,25 @@ import React, {
 } from 'react'
 import debounce from 'lodash.debounce'
 import CardsList from './CardsList'
-import { Cards, UpdateCards } from '../src/data/Store'
+import { Cards, UpdateCards, TetradSave } from '../src/data/Store'
+import firebase from 'firebase'
 
 
 export default function Sidebar({ portrait }) {
-  const [input, setInput] = useState('')
+  const [cardInput, setCardInput] = useState('')
+  const [nameInput, setNameInput] = useState('')
   const cards = useContext(Cards)
   const updateCards = useContext(UpdateCards)
+  const save = useContext(TetradSave)
 
   const createCard = e => {
-    updateCards([...cards, input])
-    setInput('')
+    updateCards([...cards, cardInput])
+    setCardInput('')
+  }
+
+  const addToDB = () => {
+    save({type:'CREATE',name:nameInput})
+    setNameInput('')
   }
 
   return (
@@ -50,9 +58,35 @@ export default function Sidebar({ portrait }) {
         <input
           type='text'
           maxLength='50'
+          placeholder='What game or class will you analyze?'
+          value={nameInput}
+          onChange={e=>setNameInput(e.target.value)}
+          sx={{
+            width:'80%',
+            fontSize:'teensy',
+            fontFamily:'tetrad'
+          }}/>
+        <button
+          onClick={addToDB}
+          sx={{
+            borderRadius:'1vmin',
+            border:'none',
+            bg:'aesth',
+            color:'light',
+            fontSize:'teensy',
+            fontFamily:'body',
+            width:portrait ? '50%' : '20%',
+            mt:[1,2,3]
+          }}
+          >
+          start
+        </button>
+        <input
+          type='text'
+          maxLength='50'
           placeholder='Create a new card...'
-          value={input}
-          onChange={e=>setInput(e.target.value)}
+          value={cardInput}
+          onChange={e=>setCardInput(e.target.value)}
           sx={{
             width:'80%',
             fontSize:'teensy',
