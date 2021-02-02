@@ -26,6 +26,8 @@ export default function Sidebar({ portrait, fbInstance }) {
   const [tetradList, setList] = useState([])
 
   const createCard = e => {
+    console.log(cards)
+    console.log(cardInput)
     updateCards([...cards, cardInput])
     setCardInput('')
   }
@@ -202,6 +204,10 @@ export default function Sidebar({ portrait, fbInstance }) {
             >
             create
           </button>
+          </>
+        }
+        </div>
+        {data.uid &&
           <div
             sx={{
               display:'flex',
@@ -235,6 +241,7 @@ export default function Sidebar({ portrait, fbInstance }) {
                 </>
               }
               {portrait &&
+                <>
                 <div
                   sx={{
                     display:'flex',
@@ -266,12 +273,11 @@ export default function Sidebar({ portrait, fbInstance }) {
                     </span>
                   </h3>
                 </div>
-              }
-            </div>
-        <CardsList cards={cards} portrait={portrait} />
-        </>
+              </>
+            }
+            <CardsList cards={cards} portrait={portrait} />
+          </div>
         }
-      </div>
     </div>
   )
 }
