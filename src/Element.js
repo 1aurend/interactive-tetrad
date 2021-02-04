@@ -1,3 +1,4 @@
+/** @jsxImportSource theme-ui */
 import React, {
   useContext
 } from 'react'
@@ -28,19 +29,32 @@ export default function Element(props) {
         }
       })
   }
+  const onDropCard = monitor => {
+    const update = [...cards]
+    update.splice(monitor.i, 1)
+    updateCards(update)
+    save(type, cards[monitor.i])
+  }
+  const onDropTag = monitor => {
+    save(type, data[monitor.el][monitor.i])
+    firebase.database().ref(`tetrads/${data.uid}/${monitor.el}/${monitor.i}`).remove()
+  }
   const [{ isOver }, drop] = useDrop({
-    accept: DraggableTypes.CARD,
+    accept: [DraggableTypes.CARD, DraggableTypes.TAG],
     drop: (monitor) => {
-      const update = [...cards]
-      update.splice(monitor.i, 1)
-      updateCards(update)
-      save(type, cards[monitor.i])
+      if (monitor.type === 'card') {
+        onDropCard(monitor)
+        return
+      }
+      onDropTag(monitor)
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver()
     })
   })
-  const handleClick = () => {
+
+  const handleClick = e => {
+    e.stopPropagation()
     showContent(prevContent => {
       if (prevContent.type === type) {
         return {visible:!prevContent.visible,type:type}
@@ -51,7 +65,7 @@ export default function Element(props) {
 
   return (
     <>
-    <g ref={drop}>
+    <g ref={drop} sx={{cursor:'pointer'}}>
       <circle
         cx={cx}
         cy={cy}

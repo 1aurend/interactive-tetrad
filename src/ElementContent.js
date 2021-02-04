@@ -4,10 +4,13 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import { Data } from '../src/data/Store'
+import { Cards, UpdateCards, Data } from '../src/data/Store'
 import theme from './theme'
 import useRAFSize from './hooks/useRAFWindowSize'
 import firebase from 'firebase'
+import { useDrop } from 'react-dnd'
+import { DraggableTypes } from './dndConsts'
+import Tag from './Tag'
 
 
 export default function ElementContent({ type, portrait, setVisible }) {
@@ -16,6 +19,8 @@ export default function ElementContent({ type, portrait, setVisible }) {
   const size = useRAFSize()
   const [top, setTop] = useState()
   const [left, setLeft] = useState()
+  const updateCards = useContext(UpdateCards)
+  const cards = useContext(Cards)
 
   useEffect(() => {
     const aspect = size.width/size.height
@@ -26,13 +31,31 @@ export default function ElementContent({ type, portrait, setVisible }) {
     setTop(`${(100-(aspect*30))/2}vh`)
   }, [size, portrait])
 
-  const remove = e => i => {
-    firebase.database().ref(`tetrads/${data.uid}/${type}/${i}`).remove()
-    e.stopPropagation()
+  const save = (el, card) => {
+    firebase.database().ref(`/tetrads/${data.uid}/${el}`)
+      .update({[data[el].length]: card}, err => {
+        if (err) {
+          alert('We had an issue connecting to the database. Sorry about that! Please try again.')
+          return
+        }
+      })
   }
+  const [{ isOver }, drop] = useDrop({
+    accept: DraggableTypes.CARD,
+    drop: (monitor) => {
+      const update = [...cards]
+      update.splice(monitor.i, 1)
+      updateCards(update)
+      save(type, cards[monitor.i])
+    },
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver()
+    })
+  })
 
   return (
     <div
+      ref={drop}
       onClick={e => e.stopPropagation()}
       sx={{
         bg:`${theme.colors[type]}CC`,
@@ -49,60 +72,7 @@ export default function ElementContent({ type, portrait, setVisible }) {
         justifyContent:'space-between',
         alignContent:'flex-start'
       }}>
-      {items.map((item, i) => (
-        <div
-          sx={{
-            bg:'light',
-            height:'3vmin',
-            width:'48%',
-            // border:`2px solid ${theme.colors.Grey}`,
-            textAlign:'left',
-            pl:'1%',
-            pr:'1%',
-            mb:'max(1vw, 20px)',
-            filter:`drop-shadow(0 0 .25rem ${theme.colors.light})`,
-            display:'flex',
-            justifyContent:'space-between',
-            alignItems:'center',
-          }}>
-          <div
-            sx={{
-              overflow:'scroll',
-              width:'80%'
-            }}>
-            <p
-              key={i}
-              sx={{
-                fontSize:'miniscule',
-                lineHeight:'3vmin',
-                fontFamily:'body',
-                color:'Grey',
-                m:0,
-                p:0,
-                whiteSpace:'nowrap'
-              }}>
-              {item}
-            </p>
-          </div>
-          <button
-            id='delete'
-            onClick={e => remove(e)(i)}
-            sx={{
-              display:'flex',
-              justifyContent:'center',
-              alignItems:'center',
-              height:'2vmin',
-              width:'2vmin',
-              fontSize:'miniscule',
-              p:0,
-              m:0,
-              border:'none',
-              bg:'none'
-            }}>
-            🚫
-          </button>
-        </div>))
-      }
+      {items.map((item, i) => <Tag item={item} i={i} el={type} uid={data.uid}/>)}
     </div>
   )
 }
