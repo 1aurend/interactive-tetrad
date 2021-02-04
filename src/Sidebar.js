@@ -18,7 +18,7 @@ import { Select, Input } from 'theme-ui'
 export default function Sidebar({ portrait, fbInstance }) {
   const [cardInput, setCardInput] = useState('')
   const [nameInput, setNameInput] = useState('')
-  const [nameSelect, setNameSelect] = useState(null)
+  const [nameSelect, setNameSelect] = useState('')
   const cards = useContext(Cards)
   const updateCards = useContext(UpdateCards)
   const save = useContext(TetradSave)
@@ -26,8 +26,6 @@ export default function Sidebar({ portrait, fbInstance }) {
   const [tetradList, setList] = useState([])
 
   const createCard = e => {
-    console.log(cards)
-    console.log(cardInput)
     updateCards([...cards, cardInput])
     setCardInput('')
   }
@@ -47,7 +45,6 @@ export default function Sidebar({ portrait, fbInstance }) {
       firebase.database().ref(`/tetrads`).once('value', snapshot => {
         const list = snapshot.val() ? snapshot.val() : null
         if (list) {
-          console.log(list)
           const options = Object.keys(list).map(item => ({uid:item,name:list[item].name}))
           setList(options)
         }
@@ -99,15 +96,15 @@ export default function Sidebar({ portrait, fbInstance }) {
             Choose a game or class to explore
           </h2>
           <Select
-            defaultValue={null}
-            onChange={e=>setNameSelect(e.target.value)}
+            value={nameSelect}
+            onChange={e=>{setNameSelect(e.target.value);setNameInput('')}}
             sx={{
               width:'90%',
               fontSize:'teensy',
               fontFamily:'tetrad',
               bg:'light'
             }}>
-            <option value={null}>select...</option>
+            <option value={''}>select...</option>
             {tetradList.map((item, i) => <option value={item.uid} key={i}>{item.name}</option>)}
           </Select>
           <h2
@@ -127,7 +124,7 @@ export default function Sidebar({ portrait, fbInstance }) {
             maxLength='50'
             placeholder=''
             value={nameInput}
-            onChange={e=>setNameInput(e.target.value)}
+            onChange={e=>{setNameInput(e.target.value);setNameSelect('')}}
             sx={{
               width:'90%',
               fontSize:'teensy',

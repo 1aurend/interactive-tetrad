@@ -12,8 +12,16 @@ import Content from './ElementContent'
 
 export default function Tetrad({ portrait }) {
   const [content, setContent] = useState({visible:false,type:''})
+
+  const closeContentPane = () => {
+    if (content.visible) {
+      setContent({visible:false,type:''})
+    }
+  }
+
   return (
     <div
+      onClick={closeContentPane}
       sx={{
         height:portrait ? '60vh' : '100vh',
         width:portrait ? '100vw' : '60vw',

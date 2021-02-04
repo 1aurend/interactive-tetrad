@@ -33,7 +33,7 @@ export default function ElementContent({ type, portrait, setVisible }) {
 
   return (
     <div
-      onClick={() => setVisible({visible:false,type:''})}
+      onClick={e => e.stopPropagation()}
       sx={{
         bg:`${theme.colors[type]}CC`,
         height:portrait ? '30vh' : '30vw',
