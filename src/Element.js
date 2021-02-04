@@ -65,14 +65,17 @@ export default function Element(props) {
 
   return (
     <>
-    <g ref={drop} sx={{cursor:'pointer'}}>
+    <g
+      ref={drop}
+      sx={{cursor:'pointer'}}
+      onClick={handleClick}
+      >
       <circle
         cx={cx}
         cy={cy}
         r={isOver? 80 : 70.3}
         fill={fill}
         opacity={isOver? .8 : 1}
-        onClick={handleClick}
         />
       {type === 'aesth' &&
         <text

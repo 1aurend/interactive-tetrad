@@ -32,7 +32,7 @@ export default function Tetrad({ portrait }) {
         bg:'light'
       }}
       >
-      <TetradSVG viewBox={`-10 0 580 580`} showContent={setContent}/>
+      <TetradSVG viewBox={`-10 -10 580 580`} showContent={setContent}/>
       {content.visible &&
         <Content
           type={content.type}
