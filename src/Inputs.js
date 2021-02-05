@@ -59,13 +59,13 @@ export default function Inputs({ portrait, fbInstance }) {
         top:'3vh',
         left:'3vw',
         zIndex:1000,
-        width:'25vw'
+        width:portrait? '35vw' : '25vw'
       }}>
       <div
         sx={{
           display:'flex',
           flexDirection:'column',
-          width:portrait ? '30%' : '100%',
+          width:'100%',
           pl:portrait ? 0 : '10%',
         }}>
         {!data.uid && <h2

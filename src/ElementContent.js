@@ -26,11 +26,7 @@ export default function ElementContent({ type, portrait, setVisible }) {
   useEffect(() => {
     const aspect = size.width/size.height
     if (portrait) {
-      setLeft(`${(100-(35/aspect))/2}vw`)
-      return
-    }
-    if (open) {
-      setTop(`${(100-(aspect*35.5))/2}vh`)
+      setLeft(`${(100-(36/aspect))/2}vw`)
       return
     }
     setTop(`${(100-(aspect*35))/2}vh`)
@@ -64,11 +60,11 @@ export default function ElementContent({ type, portrait, setVisible }) {
       onClick={e => e.stopPropagation()}
       sx={{
         bg:`${theme.colors[type]}CC`,
-        height:portrait ? open ? '32vw' : '35vh' : '35vw',
-        width:portrait ? '35vh' : open ? '32vw' : '35vw',
+        height:portrait ? '35vh' : '35vw',
+        width:portrait ? '35vh' : '35vw',
         position:'absolute',
-        top:portrait ? '32.5vh' : top,
-        left:portrait ? left : open ? '31.5vw' : '32.5vw',
+        top:portrait ? '24vh' : top,
+        left:portrait ? left : '30vw',
         filter:`drop-shadow(0 0 1rem ${theme.colors.Grey})`,
         p:'max(1vw, 20px)',
         display:'flex',
@@ -76,7 +72,7 @@ export default function ElementContent({ type, portrait, setVisible }) {
         justifyContent:'space-between',
         alignContent:'flex-start',
         zIndex:1000,
-        transition:'all 1s ease-in'
+        transition:'height 1s ease-in, width 1s ease-in, top 1s ease-in, left 1s ease-in'
       }}>
       {items.map((item, i) => <Tag item={item} i={i} el={type} uid={data.uid}/>)}
     </div>

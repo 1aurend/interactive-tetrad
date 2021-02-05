@@ -15,6 +15,7 @@ export default function Tetrad({ portrait }) {
   const [content, setContent] = useState({visible:false,type:''})
   const cards = useContext(Cards)
   const open = cards.length > 0 ? true : false
+  const viewBox = portrait ? `-10 -25 580 580` : `-10 -10 580 580`
 
   const closeContentPane = () => {
     if (content.visible) {
@@ -26,7 +27,7 @@ export default function Tetrad({ portrait }) {
     <div
       onClick={closeContentPane}
       sx={{
-        height:portrait ? open ? '95vh' : '100vh' : '100vh',
+        height:portrait ? open ? '80vh' : '100vh' : '100vh',
         width:portrait ? '100vw' : open ? '95vw' : '100vw',
         display:'flex',
         justifyContent:'center',
@@ -36,7 +37,7 @@ export default function Tetrad({ portrait }) {
         transition:'width 1s ease-in'
       }}
       >
-      <TetradSVG viewBox={`-10 -10 580 580`} showContent={setContent}/>
+      <TetradSVG viewBox={viewBox} showContent={setContent}/>
       {content.visible &&
         <Content
           type={content.type}

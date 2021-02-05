@@ -19,39 +19,41 @@ export default function CardTray({ portrait }) {
     <div
       sx={{
         position:'absolute',
-        right:0,
-        top:0,
-        width:open ? '15vw' : 0,
-        height:'100vh',
-        transition:'width 1s ease-in',
-        bg:'light'
+        right:portrait ? '' : 0,
+        left:portrait ? '3vw' : '',
+        top:portrait ? open ? '78vh' : '100vh' : 0,
+        width:portrait ? '100vw' : open ? '17vw' : 0,
+        height:portrait ? open ? '20vh' : 0 : '100vh',
+        transition:portrait ? 'height 1s ease-in' : 'width 1s ease-in',
+        bg:'light',
+        zIndex:1000
       }}>
-      <h3
-        sx={{
-          fontSize:'tiny',
-          fontFamily:'tetrad',
-          fontWeight:'bold',
-          color:'Grey',
-          mt:portrait ? 0 : '7vh',
-          mb:0,
-          overflow:'hidden',
-          whiteSpace:'nowrap'
-        }}>
-          Available Cards
-        </h3>
-        <p
+        <h3
           sx={{
-            fontSize:'miniscule',
-            fontFamily:'body',
+            fontSize:'tiny',
+            fontFamily:'tetrad',
+            fontWeight:'bold',
             color:'Grey',
-            mt:'1vmin',
+            mt:portrait ? 0 : '7vh',
+            mb:0,
             overflow:'hidden',
             whiteSpace:'nowrap'
-          }}
-          >
-          Drag to add to tetrad
-        </p>
-        <CardsList cards={cards} portrait={portrait} />
+          }}>
+            Available Cards
+          </h3>
+          <p
+            sx={{
+              fontSize:'miniscule',
+              fontFamily:'body',
+              color:'Grey',
+              mt:'1vmin',
+              overflow:'hidden',
+              whiteSpace:'nowrap'
+            }}
+            >
+            Drag to add to tetrad
+          </p>
+      <CardsList cards={cards} portrait={portrait} />
     </div>
   )
 }

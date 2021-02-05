@@ -18,7 +18,6 @@ export default function TetradLayout({ fbInstance }) {
   const mediaVals = useMediaQueries(mQs)
   const data = useContext(Data)
   const save = useContext(TetradSave)
-  const [open, toggleOpen] = useState(false)
 
   useEffect(() => {
     if (data.uid) {
@@ -47,8 +46,6 @@ export default function TetradLayout({ fbInstance }) {
     }
   }, [data.uid, save])
 
-  console.log(data)
-
 
   return (
     <main
@@ -61,10 +58,9 @@ export default function TetradLayout({ fbInstance }) {
         bg:'none'
       }}
       >
-      <Inputs toggleOpen={toggleOpen} portrait={mediaVals.portrait} fbInstance={fbInstance}/>
-      <CardTray/>
+      <Inputs portrait={mediaVals.portrait} fbInstance={fbInstance}/>
+      <CardTray portrait={mediaVals.portrait}/>
       <Tetrad portrait={mediaVals.portrait}/>
-      {false && <Sidebar portrait={mediaVals.portrait} fbInstance={fbInstance}/>}
     </main>
   )
 }
