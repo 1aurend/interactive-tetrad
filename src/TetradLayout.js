@@ -22,19 +22,19 @@ export default function TetradLayout({ fbInstance }) {
   useEffect(() => {
     if (data.uid) {
       firebase.database().ref(`/tetrads/${data.uid}/story`).on('value', snapshot => {
-      const update = snapshot.val() ? snapshot.val() : 'default'
+      const update = snapshot.val() ? snapshot.val() : []
       save({type:'STORY',update:update})
       })
       firebase.database().ref(`/tetrads/${data.uid}/aesth`).on('value', snapshot => {
-      const update = snapshot.val() ? snapshot.val() : 'default'
+      const update = snapshot.val() ? snapshot.val() : []
       save({type:'AESTH',update:update})
       })
       firebase.database().ref(`/tetrads/${data.uid}/mech`).on('value', snapshot => {
-      const update = snapshot.val() ? snapshot.val() : 'default'
+      const update = snapshot.val() ? snapshot.val() : []
       save({type:'MECH',update:update})
       })
       firebase.database().ref(`/tetrads/${data.uid}/tech`).on('value', snapshot => {
-      const update = snapshot.val() ? snapshot.val() : 'default'
+      const update = snapshot.val() ? snapshot.val() : []
       save({type:'TECH',update:update})
       })
       return () => {

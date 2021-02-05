@@ -22,6 +22,8 @@ export default function ElementContent({ type, portrait, setVisible }) {
   const updateCards = useContext(UpdateCards)
   const cards = useContext(Cards)
   const open = cards.length > 0 ? true : false
+  console.log(cards)
+  console.log(open)
 
   useEffect(() => {
     const aspect = size.width/size.height
@@ -63,8 +65,8 @@ export default function ElementContent({ type, portrait, setVisible }) {
         height:portrait ? '35vh' : '35vw',
         width:portrait ? '35vh' : '35vw',
         position:'absolute',
-        top:portrait ? '24vh' : top,
-        left:portrait ? left : '30vw',
+        top:portrait ? open ? '24vh' : '34vh' : top,
+        left:portrait ? left : open ? '30vw' : '32.5vw',
         filter:`drop-shadow(0 0 1rem ${theme.colors.Grey})`,
         p:'max(1vw, 20px)',
         display:'flex',
