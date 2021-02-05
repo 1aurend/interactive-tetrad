@@ -1,13 +1,16 @@
 /** @jsxImportSource theme-ui */
 import React, {
   useContext,
-  useEffect
+  useEffect,
+  useState
 } from 'react'
 import Sidebar from './Sidebar'
 import Tetrad from './Tetrad'
 import useMediaQueries from './hooks/useMediaQueries'
 import { Data, TetradSave } from '../src/data/Store'
 import firebase from 'firebase'
+import CardTray from './CardTray'
+import Inputs from './Inputs'
 
 
 export default function TetradLayout({ fbInstance }) {
@@ -15,6 +18,7 @@ export default function TetradLayout({ fbInstance }) {
   const mediaVals = useMediaQueries(mQs)
   const data = useContext(Data)
   const save = useContext(TetradSave)
+  const [open, toggleOpen] = useState(false)
 
   useEffect(() => {
     if (data.uid) {
@@ -57,8 +61,10 @@ export default function TetradLayout({ fbInstance }) {
         bg:'none'
       }}
       >
+      <Inputs toggleOpen={toggleOpen} portrait={mediaVals.portrait} fbInstance={fbInstance}/>
+      <CardTray/>
       <Tetrad portrait={mediaVals.portrait}/>
-      <Sidebar portrait={mediaVals.portrait} fbInstance={fbInstance}/>
+      {false && <Sidebar portrait={mediaVals.portrait} fbInstance={fbInstance}/>}
     </main>
   )
 }

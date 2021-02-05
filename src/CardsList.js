@@ -16,7 +16,7 @@ const Card = ({ text, num, portrait }) => {
     <div
       ref={drag}
       sx={{
-        width:portrait ? '22%' : '31%',
+        width:portrait ? '22%' : '10vw',
         height:portrait ? '8vw' : '7.4vw',
         background:'linear-gradient(to right bottom, #62c4d6,#a3509f,#db742b,#e0c73a)',
         fontFamily:'body',
@@ -43,6 +43,7 @@ export default function CardsList({ cards, portrait }){
     <div
       sx={{
         display:'flex',
+        flexDirection:'column',
         justifyContent:'flex-start',
         flexWrap:'wrap'
       }}

@@ -21,15 +21,20 @@ export default function ElementContent({ type, portrait, setVisible }) {
   const [left, setLeft] = useState()
   const updateCards = useContext(UpdateCards)
   const cards = useContext(Cards)
+  const open = cards.length > 0 ? true : false
 
   useEffect(() => {
     const aspect = size.width/size.height
     if (portrait) {
-      setLeft(`${(100-(30/aspect))/2}vw`)
+      setLeft(`${(100-(35/aspect))/2}vw`)
       return
     }
-    setTop(`${(100-(aspect*30))/2}vh`)
-  }, [size, portrait])
+    if (open) {
+      setTop(`${(100-(aspect*35.5))/2}vh`)
+      return
+    }
+    setTop(`${(100-(aspect*35))/2}vh`)
+  }, [size, portrait, open])
 
   const save = (el, card) => {
     firebase.database().ref(`/tetrads/${data.uid}/${el}`)
@@ -59,18 +64,19 @@ export default function ElementContent({ type, portrait, setVisible }) {
       onClick={e => e.stopPropagation()}
       sx={{
         bg:`${theme.colors[type]}CC`,
-        height:portrait ? '30vh' : '30vw',
-        width:portrait ? '30vh' : '30vw',
+        height:portrait ? open ? '32vw' : '35vh' : '35vw',
+        width:portrait ? '35vh' : open ? '32vw' : '35vw',
         position:'absolute',
-        top:portrait ? '15vh' : top,
-        left:portrait ? left : '15vw',
-        zIndex:1,
+        top:portrait ? '32.5vh' : top,
+        left:portrait ? left : open ? '31.5vw' : '32.5vw',
         filter:`drop-shadow(0 0 1rem ${theme.colors.Grey})`,
         p:'max(1vw, 20px)',
         display:'flex',
         flexWrap:'wrap',
         justifyContent:'space-between',
-        alignContent:'flex-start'
+        alignContent:'flex-start',
+        zIndex:1000,
+        transition:'all 1s ease-in'
       }}>
       {items.map((item, i) => <Tag item={item} i={i} el={type} uid={data.uid}/>)}
     </div>

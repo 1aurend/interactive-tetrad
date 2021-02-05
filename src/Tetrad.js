@@ -8,10 +8,13 @@ import React, {
 } from 'react'
 import TetradSVG from './Svgr'
 import Content from './ElementContent'
+import { Cards } from '../src/data/Store'
 
 
 export default function Tetrad({ portrait }) {
   const [content, setContent] = useState({visible:false,type:''})
+  const cards = useContext(Cards)
+  const open = cards.length > 0 ? true : false
 
   const closeContentPane = () => {
     if (content.visible) {
@@ -23,13 +26,14 @@ export default function Tetrad({ portrait }) {
     <div
       onClick={closeContentPane}
       sx={{
-        height:portrait ? '60vh' : '100vh',
-        width:portrait ? '100vw' : '60vw',
+        height:portrait ? open ? '95vh' : '100vh' : '100vh',
+        width:portrait ? '100vw' : open ? '95vw' : '100vw',
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
         p:[3,4,5],
-        bg:'light'
+        bg:'light',
+        transition:'width 1s ease-in'
       }}
       >
       <TetradSVG viewBox={`-10 -10 580 580`} showContent={setContent}/>
@@ -37,7 +41,8 @@ export default function Tetrad({ portrait }) {
         <Content
           type={content.type}
           portrait={portrait}
-          setVisible={setContent}/>
+          setVisible={setContent}
+          />
       }
     </div>
   )

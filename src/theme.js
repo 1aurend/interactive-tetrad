@@ -41,7 +41,8 @@ const theme = {
     DarkPurple1: '#131438',
     Grey: '#3D4849',
     DarkGrey1: '#222829',
-    DarkGrey2: '#191e1e'
+    DarkGrey2: '#191e1e',
+    background: '#f0f4f8'
   },
   space: [0, 4, 8, 16, 32, 48],
   breakpoints: ['40em', '64em', '80em'],

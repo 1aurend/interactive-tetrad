@@ -9,6 +9,7 @@ export default function TetradSVG({ viewBox, showContent }) {
       viewBox={viewBox}
       width='100%'
       height='100%'
+      zIndex={0}
       >
       <g data-name="Layer 1">
         <path
