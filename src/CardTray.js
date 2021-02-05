@@ -34,6 +34,8 @@ export default function CardTray({ portrait }) {
           color:'Grey',
           mt:portrait ? 0 : '7vh',
           mb:0,
+          overflow:'hidden',
+          whiteSpace:'nowrap'
         }}>
           Available Cards
         </h3>
