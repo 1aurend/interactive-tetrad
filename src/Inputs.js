@@ -2,7 +2,8 @@
 import React, {
   useState,
   useContext,
-  useEffect
+  useEffect,
+  useRef
 } from 'react'
 import CardsList from './CardsList'
 import {
@@ -24,6 +25,9 @@ export default function Inputs({ portrait, fbInstance }) {
   const save = useContext(TetradSave)
   const data = useContext(Data)
   const [tetradList, setList] = useState([])
+  const x = useRef(null)
+  const y = useRef(null)
+  const [credits, setCredits] = useState('none')
 
   const createCard = e => {
     updateCards([...cards, cardInput])
@@ -52,6 +56,12 @@ export default function Inputs({ portrait, fbInstance }) {
     }
   }, [data.uid, fbInstance])
 
+  const showCredits = e => {
+    x.current = e.clientX
+    y.current = e.clientY
+    setCredits('visible')
+  }
+
   return (
     <div
       sx={{
@@ -68,19 +78,38 @@ export default function Inputs({ portrait, fbInstance }) {
           width:'100%',
           pl:portrait ? 0 : '10%',
         }}>
-        {!data.uid && <h2
-          sx={{
-            fontSize:'medium',
-            fontFamily:'tetrad',
-            fontWeight:'bold',
-            color:'Grey',
-            mt:portrait ? 0 : '.83em',
-            mb:0,
-            lineHeight:'3vmin',
-          }}
-          >
-          The Tetrad
-        </h2>}
+        {!data.uid &&
+          <>
+            <h2
+            sx={{
+              fontSize:'medium',
+              fontFamily:'tetrad',
+              fontWeight:'bold',
+              color:'Grey',
+              mt:portrait ? 0 : '.83em',
+              mb:0,
+              lineHeight:'3vmin',
+            }}
+            >
+            The Tetrad<span onMouseEnter={showCredits} onMouseLeave={() => {setCredits('none');console.log('exit')}}>*</span>
+          </h2>
+          <div
+            sx={{
+              position:'fixed',
+              display:credits,
+              top:y.current,
+              left:x.current,
+              color:'light',
+              bg:'story',
+              p:'10px',
+              width:'15vw',
+              fontFamily:'body',
+              fontWeight:'bold'
+            }}>
+            From Jesse Schell's <em>The Art of Game Design: A Book of Lenses</em>
+          </div>
+        </>
+        }
         {!data.uid &&
           <>
           <h2
