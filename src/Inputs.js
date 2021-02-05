@@ -84,7 +84,6 @@ export default function Inputs({ portrait, fbInstance }) {
             sx={{
               fontSize:'medium',
               fontFamily:'tetrad',
-              fontWeight:'bold',
               color:'Grey',
               mt:portrait ? 0 : '.83em',
               mb:0,
@@ -130,7 +129,8 @@ export default function Inputs({ portrait, fbInstance }) {
             sx={{
               width:'min(90%, 400px)',
               fontSize:'teensy',
-              fontFamily:'tetrad',
+              fontFamily:'body',
+              color:'Grey',
               bg:'light'
             }}>
             <option value={''}>select...</option>
@@ -157,8 +157,9 @@ export default function Inputs({ portrait, fbInstance }) {
             sx={{
               width:'min(90%, 400px)',
               fontSize:'teensy',
-              fontFamily:'tetrad',
-              bg:'light'
+              fontFamily:'body',
+              bg:'light',
+              color:'Grey'
             }}/>
           <button
             onClick={addToDB}
@@ -214,8 +215,9 @@ export default function Inputs({ portrait, fbInstance }) {
             sx={{
               width:'min(90%, 400px)',
               fontSize:'teensy',
-              fontFamily:'tetrad',
-              bg:'light'
+              fontFamily:'body',
+              bg:'light',
+              color:'Grey'
             }}/>
           <button
             onClick={createCard}
