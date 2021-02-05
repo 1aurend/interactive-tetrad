@@ -5,6 +5,19 @@ import reportWebVitals from './reportWebVitals'
 import Router from './Router'
 import { ThemeProvider } from 'theme-ui'
 import theme from './theme'
+import './index.css'
+import './fonts/KohinoorDevanagari-Bold.woff'
+import './fonts/KohinoorDevanagari-Bold.ttf'
+import './fonts/KohinoorDevanagari-Bold.otf'
+import './fonts/KohinoorDevanagari-Regular.woff'
+import './fonts/KohinoorDevanagari-Regular.ttf'
+import './fonts/KohinoorDevanagari-Regular.otf'
+import './fonts/KohinoorDevanagari-Regular.woff'
+import './fonts/KohinoorDevanagari-Regular.ttf'
+import './fonts/KohinoorDevanagari-Medium.otf'
+import './fonts/KohinoorDevanagari-Medium.woff'
+import './fonts/KohinoorDevanagari-Medium.ttf'
+
 
 ReactDOM.render(
   <React.StrictMode>

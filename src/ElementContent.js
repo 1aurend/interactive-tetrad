@@ -22,8 +22,7 @@ export default function ElementContent({ type, portrait, setVisible }) {
   const updateCards = useContext(UpdateCards)
   const cards = useContext(Cards)
   const open = cards.length > 0 ? true : false
-  console.log(cards)
-  console.log(open)
+  console.log(items)
 
   useEffect(() => {
     const aspect = size.width/size.height
@@ -35,8 +34,11 @@ export default function ElementContent({ type, portrait, setVisible }) {
   }, [size, portrait, open])
 
   const save = (el, card) => {
-    firebase.database().ref(`/tetrads/${data.uid}/${el}`)
-      .update({[data[el].length]: card}, err => {
+    const uid = firebase.database().ref(`/tetrads/${data.uid}/${el}`)
+      .push()
+      .getKey()
+    firebase.database().ref(`/tetrads/${data.uid}/${el}/${uid}`)
+      .set(card, err => {
         if (err) {
           alert('We had an issue connecting to the database. Sorry about that! Please try again.')
           return
@@ -74,9 +76,9 @@ export default function ElementContent({ type, portrait, setVisible }) {
         justifyContent:'space-between',
         alignContent:'flex-start',
         zIndex:1000,
-        transition:'height 1s ease-in, width 1s ease-in, top 1s ease-in, left 1s ease-in'
+        transition:'height .5s ease-in, width .5s ease-in, top .5s ease-in, left .5s ease-in'
       }}>
-      {items.map((item, i) => <Tag item={item} i={i} el={type} uid={data.uid}/>)}
+      {Object.keys(items).map((item, i) => <Tag item={items[item]} id={item} i={i} el={type} uid={data.uid}/>)}
     </div>
   )
 }

@@ -3,12 +3,7 @@ import React, {
   useContext
 } from 'react'
 import CardsList from './CardsList'
-import {
-  Cards,
-  UpdateCards,
-  TetradSave,
-  Data
-} from '../src/data/Store'
+import { Cards } from '../src/data/Store'
 
 
 export default function CardTray({ portrait }) {
@@ -24,7 +19,7 @@ export default function CardTray({ portrait }) {
         top:portrait ? open ? '78vh' : '100vh' : 0,
         width:portrait ? '100vw' : open ? '17vw' : 0,
         height:portrait ? open ? '20vh' : 0 : '100vh',
-        transition:portrait ? 'height 1s ease-in' : 'width 1s ease-in',
+        transition:portrait ? 'height .5s ease-in-out' : 'width .5s ease-in-out',
         bg:'light',
         zIndex:1000
       }}>

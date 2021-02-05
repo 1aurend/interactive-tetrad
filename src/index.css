@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "Kohinoor Devanagari";
+  src:
+    url("./fonts/KohinoorDevanagari-Semibold.woff") format("woff"),
+    url("./fonts/KohinoorDevanagari-Semibold.ttf") format("otf"),
+    url("./fonts/KohinoorDevanagari-Semibold.ttf") format("ttf"),
+    /* url("./fonts/KohinoorDevanagari-Regular.woff") format("woff"),
+    url("./fonts/KohinoorDevanagari-Regular.ttf") format("otf"),
+    url("./fonts/KohinoorDevanagari-Regular.ttf") format("ttf"), */
+    url("./fonts/KohinoorDevanagari-Medium.woff") format("woff"),
+    url("./fonts/KohinoorDevanagari-Medium.ttf") format("otf"),
+    url("./fonts/KohinoorDevanagari-Medium.ttf") format("ttf"),
+    url("./fonts/KohinoorDevanagari-Bold.woff") format("woff"),
+    url("./fonts/KohinoorDevanagari-Bold.ttf") format("otf"),
+    url("./fonts/KohinoorDevanagari-Bold.ttf") format("ttf");
+}

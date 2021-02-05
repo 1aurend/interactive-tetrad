@@ -6,15 +6,15 @@ import { DraggableTypes } from './dndConsts'
 import theme from './theme'
 
 
-export default function Tag({ item, i, el, uid }) {
+export default function Tag({ item, id, i, el, uid }) {
   const [{ isDragging }, drag] = useDrag({
-    item: { type:DraggableTypes.TAG, i:i, el:el },
+    item: { type:DraggableTypes.TAG, i:i, uid:id, el:el },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging()
     })
   })
-  const remove = e => i => {
-    firebase.database().ref(`tetrads/${uid}/${el}/${i}`).remove()
+  const remove = e => id => {
+    firebase.database().ref(`tetrads/${uid}/${el}/${id}`).remove()
     e.stopPropagation()
   }
 
@@ -56,7 +56,7 @@ export default function Tag({ item, i, el, uid }) {
       </div>
       <button
         id='delete'
-        onClick={e => remove(e)(i)}
+        onClick={e => remove(e)(id)}
         sx={{
           display:'flex',
           justifyContent:'center',
@@ -67,7 +67,8 @@ export default function Tag({ item, i, el, uid }) {
           p:0,
           m:0,
           border:'none',
-          bg:'none'
+          bg:'none',
+          cursor:'pointer'
         }}>
         🚫
       </button>

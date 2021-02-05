@@ -18,8 +18,8 @@ const theme = {
       'colossal': '12vmin',
     },
   fontWeights: {
-  body: 400,
-  heading: 700,
+  body: 500,
+  heading: "Semibold",
   },
   colors: {
     black: '#000',

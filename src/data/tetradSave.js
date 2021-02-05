@@ -28,13 +28,13 @@ export default function tetradSave(data, action) {
       return {...data, uid:action.uid, name:action.name}
     case 'STORY':
       console.log('story')
-      return {...data, story:Object.values(action.update)}
+      return {...data, story:action.update}
     case 'AESTH':
-      return {...data, aesth:Object.values(action.update)}
+      return {...data, aesth:action.update}
     case 'MECH':
-      return {...data, mech:Object.values(action.update)}
+      return {...data, mech:action.update}
     case 'TECH':
-      return {...data, tech:Object.values(action.update)}
+      return {...data, tech:action.update}
     default:
       alert('Error updating game data')
   }

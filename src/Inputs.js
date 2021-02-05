@@ -104,7 +104,7 @@ export default function Inputs({ portrait, fbInstance }) {
               p:'10px',
               width:'15vw',
               fontFamily:'body',
-              fontWeight:'bold'
+              fontWeight:'heading'
             }}>
             From Jesse Schell's <em>The Art of Game Design: A Book of Lenses</em>
           </div>

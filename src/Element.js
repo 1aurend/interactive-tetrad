@@ -21,8 +21,11 @@ export default function Element(props) {
   const data = useContext(Data)
 
   const save = (el, card) => {
-    firebase.database().ref(`/tetrads/${data.uid}/${el}`)
-      .update({[data[el].length]: card}, err => {
+    const uid = firebase.database().ref(`/tetrads/${data.uid}/${el}`)
+      .push()
+      .getKey()
+    firebase.database().ref(`/tetrads/${data.uid}/${el}/${uid}`)
+      .set(card, err => {
         if (err) {
           alert('We had an issue connecting to the database. Sorry about that! Please try again.')
           return
@@ -36,8 +39,9 @@ export default function Element(props) {
     save(type, cards[monitor.i])
   }
   const onDropTag = monitor => {
-    save(type, data[monitor.el][monitor.i])
-    firebase.database().ref(`tetrads/${data.uid}/${monitor.el}/${monitor.i}`).remove()
+    console.log(monitor)
+    save(type, data[monitor.el][monitor.uid])
+    firebase.database().ref(`tetrads/${data.uid}/${monitor.el}/${monitor.uid}`).remove()
   }
   const [{ isOver }, drop] = useDrop({
     accept: [DraggableTypes.CARD, DraggableTypes.TAG],
@@ -119,7 +123,7 @@ export default function Element(props) {
       {type === 'mech' &&
         <text
           transform="translate(32.49 281.44)"
-          fontFamily="KohinoorBangla-Semibold,Kohinoor Bangla"
+          fontFamily="KohinoorDevanagari-Bold,Kohinoor Devanagari"
           fontWeight={600}
           letterSpacing=".09em"
           fontSize={12}

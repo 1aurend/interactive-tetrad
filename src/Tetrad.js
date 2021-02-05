@@ -34,7 +34,7 @@ export default function Tetrad({ portrait }) {
         alignItems:'center',
         p:[3,4,5],
         bg:'light',
-        transition:'width 1s ease-in'
+        transition:'width .5s ease-in, height .5s ease-in'
       }}
       >
       <TetradSVG viewBox={viewBox} showContent={setContent}/>
