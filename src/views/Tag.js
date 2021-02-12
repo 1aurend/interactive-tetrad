@@ -2,8 +2,8 @@
 import React from 'react'
 import firebase from 'firebase'
 import { useDrag } from 'react-dnd'
-import { DraggableTypes } from './dndConsts'
-import theme from './theme'
+import { DraggableTypes } from '../dndConsts'
+import theme from '../theme'
 
 
 export default function Tag({ item, id, i, el, uid }) {

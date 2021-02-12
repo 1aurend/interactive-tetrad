@@ -2,12 +2,10 @@
 import React, {
   useContext,
   useEffect,
-  useState
 } from 'react'
-import Sidebar from './Sidebar'
 import Tetrad from './Tetrad'
-import useMediaQueries from './hooks/useMediaQueries'
-import { Data, TetradSave } from '../src/data/Store'
+import useMediaQueries from '../hooks/useMediaQueries'
+import { Data, TetradSave, UpdateCards  } from '../data/Store'
 import firebase from 'firebase'
 import CardTray from './CardTray'
 import Inputs from './Inputs'
@@ -18,6 +16,7 @@ export default function TetradLayout({ fbInstance }) {
   const mediaVals = useMediaQueries(mQs)
   const data = useContext(Data)
   const save = useContext(TetradSave)
+  const updateCards = useContext(UpdateCards)
 
   useEffect(() => {
     if (data.uid) {
@@ -37,14 +36,19 @@ export default function TetradLayout({ fbInstance }) {
       const update = snapshot.val() ? snapshot.val() : []
       save({type:'TECH',update:update})
       })
+      firebase.database().ref(`/tetrads/${data.uid}/cards`).on('value', snapshot => {
+      const update = snapshot.val() ? snapshot.val() : []
+      updateCards(update)
+      })
       return () => {
         firebase.database().ref(`/tetrads/${data.uid}/story`).off()
         firebase.database().ref(`/tetrads/${data.uid}/aesth`).off()
         firebase.database().ref(`/tetrads/${data.uid}/mech`).off()
         firebase.database().ref(`/tetrads/${data.uid}/tech`).off()
+        firebase.database().ref(`/tetrads/${data.uid}/cards`).off()
       }
     }
-  }, [data.uid, save])
+  }, [data.uid, save, updateCards])
 
 
   return (

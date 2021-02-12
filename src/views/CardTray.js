@@ -3,12 +3,12 @@ import React, {
   useContext
 } from 'react'
 import CardsList from './CardsList'
-import { Cards } from '../src/data/Store'
+import { Cards } from '../data/Store'
 
 
 export default function CardTray({ portrait }) {
   const cards = useContext(Cards)
-  const open = cards.length > 0 ? true : false
+  const open = Object.keys(cards).length > 0 ? true : false
 
   return (
     <div

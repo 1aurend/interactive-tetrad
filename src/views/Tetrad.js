@@ -8,13 +8,13 @@ import React, {
 } from 'react'
 import TetradSVG from './Svgr'
 import Content from './ElementContent'
-import { Cards } from '../src/data/Store'
+import { Cards } from '../data/Store'
 
 
 export default function Tetrad({ portrait }) {
   const [content, setContent] = useState({visible:false,type:''})
   const cards = useContext(Cards)
-  const open = cards.length > 0 ? true : false
+  const open = Object.keys(cards).length > 0 ? true : false
   const viewBox = portrait ? `-10 -25 580 580` : `-10 -10 580 580`
 
   const closeContentPane = () => {

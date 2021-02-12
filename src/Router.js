@@ -4,11 +4,9 @@ import {
   Switch,
   Route
 } from 'react-router-dom'
-import TetradLayout from './TetradLayout'
+import TetradLayout from './views/TetradLayout'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import Store from '../src/data/Store'
-
 
 
 export default function AppRouter({ fbInstance }) {

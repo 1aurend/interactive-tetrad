@@ -7,11 +7,9 @@ import React, {
 } from 'react'
 import CardsList from './CardsList'
 import {
-  Cards,
-  UpdateCards,
   TetradSave,
   Data
-} from '../src/data/Store'
+} from '../data/Store'
 import firebase from 'firebase'
 import { Select, Input } from 'theme-ui'
 
@@ -20,8 +18,8 @@ export default function Inputs({ portrait, fbInstance }) {
   const [cardInput, setCardInput] = useState('')
   const [nameInput, setNameInput] = useState('')
   const [nameSelect, setNameSelect] = useState('')
-  const cards = useContext(Cards)
-  const updateCards = useContext(UpdateCards)
+  // const cards = useContext(Cards)
+  // const updateCards = useContext(UpdateCards)
   const save = useContext(TetradSave)
   const data = useContext(Data)
   const [tetradList, setList] = useState([])
@@ -30,7 +28,16 @@ export default function Inputs({ portrait, fbInstance }) {
   const [credits, setCredits] = useState('none')
 
   const createCard = e => {
-    updateCards([...cards, cardInput])
+    const uid = firebase.database().ref(`/tetrads/${data.uid}/cards`)
+      .push()
+      .getKey()
+    firebase.database().ref(`/tetrads/${data.uid}/cards/${uid}`)
+      .set(cardInput, err => {
+        if (err) {
+          alert('We had an issue connecting to the database. Sorry about that! Please try again.')
+          return
+        }
+      })
     setCardInput('')
   }
 
@@ -90,7 +97,7 @@ export default function Inputs({ portrait, fbInstance }) {
               lineHeight:'3vmin',
             }}
             >
-            The Tetrad<span onMouseEnter={showCredits} onMouseLeave={() => {setCredits('none');console.log('exit')}}>*</span>
+            The Tetrad<span onMouseEnter={showCredits} onMouseLeave={() => setCredits('none')}>*</span>
           </h2>
           <div
             sx={{

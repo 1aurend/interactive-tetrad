@@ -4,12 +4,12 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import { Cards, UpdateCards, Data } from '../src/data/Store'
-import theme from './theme'
-import useRAFSize from './hooks/useRAFWindowSize'
+import { Cards, Data } from '../data/Store'
+import theme from '../theme'
+import useRAFSize from '../hooks/useRAFWindowSize'
 import firebase from 'firebase'
 import { useDrop } from 'react-dnd'
-import { DraggableTypes } from './dndConsts'
+import { DraggableTypes } from '../dndConsts'
 import Tag from './Tag'
 
 
@@ -19,10 +19,8 @@ export default function ElementContent({ type, portrait, setVisible }) {
   const size = useRAFSize()
   const [top, setTop] = useState()
   const [left, setLeft] = useState()
-  const updateCards = useContext(UpdateCards)
   const cards = useContext(Cards)
-  const open = cards.length > 0 ? true : false
-  console.log(items)
+  const open = Object.keys(cards).length > 0 ? true : false
 
   useEffect(() => {
     const aspect = size.width/size.height
@@ -48,10 +46,8 @@ export default function ElementContent({ type, portrait, setVisible }) {
   const [{ isOver }, drop] = useDrop({
     accept: DraggableTypes.CARD,
     drop: (monitor) => {
-      const update = [...cards]
-      update.splice(monitor.i, 1)
-      updateCards(update)
-      save(type, cards[monitor.i])
+      firebase.database().ref(`tetrads/${data.uid}/cards/${monitor.uid}`).remove()
+      save(type, cards[monitor.uid])
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver()
@@ -78,7 +74,7 @@ export default function ElementContent({ type, portrait, setVisible }) {
         zIndex:1000,
         transition:'height .5s ease-in, width .5s ease-in, top .5s ease-in, left .5s ease-in'
       }}>
-      {Object.keys(items).map((item, i) => <Tag item={items[item]} id={item} i={i} el={type} uid={data.uid}/>)}
+      {Object.keys(items).map((item, i) => <Tag item={items[item]} id={item} key={item} i={i} el={type} uid={data.uid}/>)}
     </div>
   )
 }

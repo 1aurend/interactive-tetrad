@@ -3,8 +3,8 @@ import React, {
   useContext
 } from 'react'
 import { useDrop } from 'react-dnd'
-import { DraggableTypes } from './dndConsts'
-import { Cards, UpdateCards, Data } from '../src/data/Store'
+import { DraggableTypes } from '../dndConsts'
+import { Cards, Data } from '../data/Store'
 import firebase from 'firebase'
 
 
@@ -16,7 +16,6 @@ export default function Element(props) {
     type,
     showContent
   } = props
-  const updateCards = useContext(UpdateCards)
   const cards = useContext(Cards)
   const data = useContext(Data)
 
@@ -33,13 +32,10 @@ export default function Element(props) {
       })
   }
   const onDropCard = monitor => {
-    const update = [...cards]
-    update.splice(monitor.i, 1)
-    updateCards(update)
-    save(type, cards[monitor.i])
+    firebase.database().ref(`tetrads/${data.uid}/cards/${monitor.uid}`).remove()
+    save(type, cards[monitor.uid])
   }
   const onDropTag = monitor => {
-    console.log(monitor)
     save(type, data[monitor.el][monitor.uid])
     firebase.database().ref(`tetrads/${data.uid}/${monitor.el}/${monitor.uid}`).remove()
   }

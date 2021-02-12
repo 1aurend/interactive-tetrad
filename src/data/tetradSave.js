@@ -12,7 +12,6 @@ export default function tetradSave(data, action) {
         aesth:[],
       }
     case 'CREATE':
-      console.log('create')
       const uid = firebase.database().ref(`/tetrads`)
         .push()
         .getKey()
@@ -27,7 +26,6 @@ export default function tetradSave(data, action) {
     case 'OPEN':
       return {...data, uid:action.uid, name:action.name}
     case 'STORY':
-      console.log('story')
       return {...data, story:action.update}
     case 'AESTH':
       return {...data, aesth:action.update}

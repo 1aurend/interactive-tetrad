@@ -1,12 +1,12 @@
 /** @jsxImportSource theme-ui */
 import React from 'react'
 import { useDrag } from 'react-dnd'
-import { DraggableTypes } from './dndConsts'
+import { DraggableTypes } from '../dndConsts'
 
 
-const Card = ({ text, num, portrait }) => {
+const Card = ({ text, num, portrait, uid }) => {
   const [{ isDragging }, drag] = useDrag({
-    item: { type: DraggableTypes.CARD, i: num-1 },
+    item: { type: DraggableTypes.CARD, uid: uid },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging()
     })
@@ -48,7 +48,7 @@ export default function CardsList({ cards, portrait }){
         flexWrap:'wrap'
       }}
       >
-      {cards.map((card, i) => <Card key={i} num={i+1} text={card} portrait={portrait}/>)}
+      {Object.keys(cards).map((card, i) => <Card key={card} uid={card} num={i+1} text={cards[card]} portrait={portrait}/>)}
     </div>
   )
 }
